@@ -1,11 +1,11 @@
 package com.example.openidconnectdemo;
 
 public class Token {
-	private String id_token;
+	private String idToken;
 	private String state;
 
-	public String getId_token() {
-		return id_token;
+	public String getIdToken() {
+		return idToken;
 	}
 
 	public String getState() {
@@ -13,7 +13,7 @@ public class Token {
 	}
 
 	public void setId_token(String id_token) {
-		this.id_token = id_token;
+		this.idToken = id_token;
 	}
 
 	public void setState(String state) {
@@ -22,6 +22,6 @@ public class Token {
 
 	@Override
 	public String toString() {
-		return "Token [id_token=" + id_token + ", state=" + state + "]";
+		return "Token [idToken=" + idToken + ", state=" + state + "]";
 	}
 }

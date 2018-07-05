@@ -1,7 +1,6 @@
 ## ビルド&起動
 ```
-mvn clean package
-java -jar target/openid-connect-demo-0.0.1-SNAPSHOT.jar
+mvn clean package && java -jar target/openid-connect-demo-0.0.1-SNAPSHOT.jar
 ```
 
 ## Azure AD連携
