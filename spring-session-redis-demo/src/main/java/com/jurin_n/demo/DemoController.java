@@ -24,13 +24,15 @@ public class DemoController {
 		if (accessToken.getToken() == null) {
 			accessToken.setToken(name.orElse("anonymous"));
 			accessToken.setCreatedAt(new Date());
+			return "stored " + accessToken.getToken() + "in session"  + " at " + accessToken.getCreatedAt();
 		}
-		return accessToken.getToken() + " at " + accessToken.getCreatedAt();
+		return "already login. token is " + accessToken.getToken() + ".";
 	}
 
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
+		String token = accessToken.getToken();
 		session.invalidate();
-		return "";
+		return  "logout. token was " + token;
 	}
 }
