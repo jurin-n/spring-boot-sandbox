@@ -28,15 +28,18 @@ curl -D - \
      --cookie "SESSION=N2QyMDJkMGUtNmQ2MS00Njg5LTlhNWItZDkzNjhjMDNkYzkx" \
      -X POST http://localhost:8080/demo/login
 ```
+
+### セッション格納情報取得
 ```
 curl -D - \
-     --cookie "SESSION=N2QyMDJkMGUtNmQ2MS00Njg5LTlhNWItZDkzNjhjMDNkYzkx" \
+     --cookie "SESSION=MTVkNDQzZjUtZjRmNy00MWMwLTg5NjgtOGFkYWNjY2JiMTg5" \
      -X GET http://localhost:8080/demo
 ```
 
-### セッション格納情報取得
-
-
 ### セッション破棄
-
+```
+curl -D - \
+     --cookie "SESSION=ZGIyZjNiZTItNGRmZS00ZmI2LThlNzQtYmMzMTUzNDBiZDA0" \
+     -X POST http://localhost:8080/demo/logout
+```
 

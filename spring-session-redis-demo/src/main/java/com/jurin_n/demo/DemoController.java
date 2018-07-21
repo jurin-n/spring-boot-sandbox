@@ -41,7 +41,7 @@ public class DemoController {
 		return "already login. token is " + accessToken.getToken() + ".";
 	}
 
-	@GetMapping("/logout")
+	@PostMapping("/logout")
 	public String logout(HttpSession session) {
 		String token = accessToken.getToken();
 		session.invalidate();
