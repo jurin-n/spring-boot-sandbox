@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,12 +20,23 @@ public class DemoController {
 		this.accessToken = accessToken;
 	}
 
-	@GetMapping("/login")
-	public String login(@RequestParam Optional<String> name) {
+	@PostMapping("/login")
+	public String login(@RequestParam("client_id") Optional<String> clientId,
+			@RequestParam("type") Optional<String> type) {
 		if (accessToken.getToken() == null) {
-			accessToken.setToken(name.orElse("anonymous"));
+			accessToken.setToken(clientId.orElse("anonymous"));
+			accessToken.setType(type.orElse("TYPEXX"));
 			accessToken.setCreatedAt(new Date());
-			return "stored " + accessToken.getToken() + "in session"  + " at " + accessToken.getCreatedAt();
+			return "stored " + accessToken.getToken() + " type=" + accessToken.getType() + " in session" + " at "
+					+ accessToken.getCreatedAt();
+		}
+		return "already login. token is " + accessToken.getToken() + ".";
+	}
+
+	@GetMapping
+	public String get() {
+		if (accessToken.getToken() == null) {
+			return "don't login.";
 		}
 		return "already login. token is " + accessToken.getToken() + ".";
 	}
@@ -33,6 +45,6 @@ public class DemoController {
 	public String logout(HttpSession session) {
 		String token = accessToken.getToken();
 		session.invalidate();
-		return  "logout. token was " + token;
+		return "logout. token was " + token;
 	}
 }

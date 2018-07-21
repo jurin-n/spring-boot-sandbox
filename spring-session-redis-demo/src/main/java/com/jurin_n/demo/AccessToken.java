@@ -12,10 +12,15 @@ public class AccessToken implements Serializable {
 
 	private static final long serialVersionUID = 8048097948251750715L;
 	private String token;
+	private String type;
 	private Date createdAt;
 
 	public String getToken() {
 		return token;
+	}
+
+	public String getType() {
+		return type;
 	}
 
 	public Date getCreatedAt() {
@@ -24,6 +29,10 @@ public class AccessToken implements Serializable {
 
 	public void setToken(String token) {
 		this.token = token;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public void setCreatedAt(Date createdAt) {
