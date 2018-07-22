@@ -15,13 +15,13 @@ import com.example.shop.model.Book;
 @RequestMapping("/c/shop")
 @CrossOrigin(origins = "*")
 public class ShopUsingCodeController {
-	@GetMapping
-	public Book getBook(HttpServletRequest request, @RequestParam(value = "code", defaultValue = "") String code) {
-		if (code.equals("")) {
-			// リダイレクト
-			String redirectUrl = request.getRequestURL().toString();
-			throw new CodeNotFoundExeption(redirectUrl);
-		}
-		return new Book("book001");
-	}
+    @GetMapping
+    public Book getBook(HttpServletRequest request, @RequestParam(value = "code", defaultValue = "") String code) {
+        if (code.equals("")) {
+            // リダイレクト
+            String redirectUrl = request.getRequestURL().toString();
+            throw new CodeNotFoundExeption(redirectUrl);
+        }
+        return new Book("book001");
+    }
 }

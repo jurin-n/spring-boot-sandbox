@@ -7,8 +7,8 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 
 @Configuration
 public class HttpSessionConfig {
-	@Bean
-	public RedisSerializer<Object> springSessionDefaultRedisSerializer() {
-		return new GenericJackson2JsonRedisSerializer();
-	}
+    @Bean
+    public RedisSerializer<Object> springSessionDefaultRedisSerializer() {
+        return new GenericJackson2JsonRedisSerializer();
+    }
 }

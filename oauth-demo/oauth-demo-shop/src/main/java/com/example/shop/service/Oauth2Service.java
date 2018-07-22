@@ -18,45 +18,45 @@ import com.nimbusds.jwt.SignedJWT;
 
 @Service
 public class Oauth2Service {
-	private Oauth2AzureProperties oauth2AzureProperties;
+    private Oauth2AzureProperties oauth2AzureProperties;
 
-	public Oauth2Service(Oauth2AzureProperties oauth2AzureProperties) {
-		this.oauth2AzureProperties = oauth2AzureProperties;
-	}
+    public Oauth2Service(Oauth2AzureProperties oauth2AzureProperties) {
+        this.oauth2AzureProperties = oauth2AzureProperties;
+    }
 
-	public String verifyJwt(String idToken) {
-		// id token検証し、問題なければレスポンス。問題あれば例外スロー。
-		try {
-			// parse jwt
-			SignedJWT signedJWT = SignedJWT.parse(idToken);
+    public String verifyJwt(String idToken) {
+        // id token検証し、問題なければレスポンス。問題あれば例外スロー。
+        try {
+            // parse jwt
+            SignedJWT signedJWT = SignedJWT.parse(idToken);
 
-			// HTTP connect timeout in milliseconds
-			int connectTimeout = oauth2AzureProperties.getJwkConnectTimeout();// 1000;
-			// HTTP read timeout in milliseconds
-			int readTimeout = oauth2AzureProperties.getJwkReadTimeout();// 1000;
-			// JWK set size limit, in bytes
-			int sizeLimit = oauth2AzureProperties.getJwkSizeTimit();// 10000;
+            // HTTP connect timeout in milliseconds
+            int connectTimeout = oauth2AzureProperties.getJwkConnectTimeout();// 1000;
+            // HTTP read timeout in milliseconds
+            int readTimeout = oauth2AzureProperties.getJwkReadTimeout();// 1000;
+            // JWK set size limit, in bytes
+            int sizeLimit = oauth2AzureProperties.getJwkSizeTimit();// 10000;
 
-			// Load JWK set from URL(Azure AD)
-			URI uri = oauth2AzureProperties.getJwkEndpoint();
-			URL url = uri.toURL();
-			JWKSet publicKeys = JWKSet.load(url, connectTimeout, readTimeout, sizeLimit);
-			JWK jwk = publicKeys.getKeyByKeyId(signedJWT.getHeader().getKeyID());
-			RSAKey rsaKey = RSAKey.parse(jwk.toJSONString());
+            // Load JWK set from URL(Azure AD)
+            URI uri = oauth2AzureProperties.getJwkEndpoint();
+            URL url = uri.toURL();
+            JWKSet publicKeys = JWKSet.load(url, connectTimeout, readTimeout, sizeLimit);
+            JWK jwk = publicKeys.getKeyByKeyId(signedJWT.getHeader().getKeyID());
+            RSAKey rsaKey = RSAKey.parse(jwk.toJSONString());
 
-			/* verify jwt */
-			JWSVerifier verifier = new RSASSAVerifier(rsaKey.toRSAPublicKey());
-			if (signedJWT.verify(verifier)) {
-				//TODO 戻り値何にすべきか迷い中。
-				//String aud = signedJWT.getPayload().toJSONObject().getAsString("aud");
-				//String email = signedJWT.getPayload().toJSONObject().getAsString("email");
-				return signedJWT.getParsedString();
-			}
-			throw new RuntimeException();
-		} catch (ParseException | IOException | JOSEException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
-	}
+            /* verify jwt */
+            JWSVerifier verifier = new RSASSAVerifier(rsaKey.toRSAPublicKey());
+            if (signedJWT.verify(verifier)) {
+                // TODO 戻り値何にすべきか迷い中。
+                // String aud = signedJWT.getPayload().toJSONObject().getAsString("aud");
+                // String email = signedJWT.getPayload().toJSONObject().getAsString("email");
+                return signedJWT.getParsedString();
+            }
+            throw new RuntimeException();
+        } catch (ParseException | IOException | JOSEException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
 }

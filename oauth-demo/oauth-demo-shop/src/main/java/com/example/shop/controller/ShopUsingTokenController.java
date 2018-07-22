@@ -22,42 +22,42 @@ import com.example.shop.service.Oauth2Service;
 @CrossOrigin(origins = "*")
 public class ShopUsingTokenController {
 
-	private final Token token;
-	private final Oauth2Service oauth2Service;
+    private final Token token;
+    private final Oauth2Service oauth2Service;
 
-	public ShopUsingTokenController(Token token, Oauth2Service oauth2Service) {
-		this.token = token;
-		this.oauth2Service = oauth2Service;
-	}
+    public ShopUsingTokenController(Token token, Oauth2Service oauth2Service) {
+        this.token = token;
+        this.oauth2Service = oauth2Service;
+    }
 
-	@GetMapping("/login")
-	public String getLogin(HttpServletRequest request) {
-		if (token.getIdToken() == null) {
-			// リダイレクト
-			String redirectUrl = request.getRequestURL().toString();
-			throw new IdTokenNotFoundExeption(redirectUrl);
-		}
-		return "login complete.";
-	}
+    @GetMapping("/login")
+    public String getLogin(HttpServletRequest request) {
+        if (token.getIdToken() == null) {
+            // リダイレクト
+            String redirectUrl = request.getRequestURL().toString();
+            throw new IdTokenNotFoundExeption(redirectUrl);
+        }
+        return "login complete.";
+    }
 
-	@PostMapping("/login")
-	public void postLogin(HttpServletResponse response,
-			@RequestParam(value = "id_token", defaultValue = "") String idToken) {
-		// JWT検証
-		String verifiedIdToken = oauth2Service.verifyJwt(idToken);
+    @PostMapping("/login")
+    public void postLogin(HttpServletResponse response,
+            @RequestParam(value = "id_token", defaultValue = "") String idToken) {
+        // JWT検証
+        String verifiedIdToken = oauth2Service.verifyJwt(idToken);
 
-		// JWTをセッションに格納
-		token.setIdToken(verifiedIdToken);
-		token.setCreatedAt(new Date());
-	}
+        // JWTをセッションに格納
+        token.setIdToken(verifiedIdToken);
+        token.setCreatedAt(new Date());
+    }
 
-	@GetMapping
-	public Book getBook(HttpServletRequest request) {
-		if (token.getIdToken() == null) {
-			// リダイレクト
-			String redirectUrl = request.getRequestURL().toString();
-			throw new IdTokenNotFoundExeption(redirectUrl);
-		}
-		return new Book("book001");
-	}
+    @GetMapping
+    public Book getBook(HttpServletRequest request) {
+        if (token.getIdToken() == null) {
+            // リダイレクト
+            String redirectUrl = request.getRequestURL().toString();
+            throw new IdTokenNotFoundExeption(redirectUrl);
+        }
+        return new Book("book001");
+    }
 }
