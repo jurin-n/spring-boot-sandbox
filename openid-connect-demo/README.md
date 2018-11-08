@@ -14,3 +14,4 @@ echo "GET https://login.microsoftonline.com/${TENANT_ID}/oauth2/authorize?client
 https://docs.microsoft.com/ja-jp/azure/active-directory/develop/active-directory-protocols-openid-connect-code
 https://docs.microsoft.com/ja-jp/azure/active-directory/develop/active-directory-token-and-claims#validating-tokens
 https://qiita.com/TakahikoKawasaki/items/4ee9b55db9f7ef352b47
+https://gist.github.com/dmydlarz/32c58f537bb7e0ab9ebf
