@@ -3,6 +3,10 @@ package com.jurin_n.csvprocessing;
 public class CsvContent {
     private String title;
     private String description;
+    
+    public CsvContent() {
+        super();
+    }
 
     public CsvContent(String title, String description) {
         super();
