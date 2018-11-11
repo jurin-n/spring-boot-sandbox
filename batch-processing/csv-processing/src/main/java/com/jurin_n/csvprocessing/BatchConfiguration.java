@@ -71,7 +71,7 @@ public class BatchConfiguration {
     @Bean
     public Step step1(JdbcBatchItemWriter<CsvContent> writer) {
         return stepBuilderFactory.get("step1")
-            .<CsvContent, CsvContent> chunk(10)
+            .<CsvContent, CsvContent> chunk(500)
             .reader(reader())
             .processor(processor())
             .writer(writer)
