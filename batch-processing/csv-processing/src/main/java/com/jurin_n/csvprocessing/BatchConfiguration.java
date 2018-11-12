@@ -59,8 +59,8 @@ public class BatchConfiguration {
     }
 
     @Bean
-    public Step step1(JdbcBatchItemWriter<CsvContent> writer) {
-        return stepBuilderFactory.get("step1")
+    public Step step(JdbcBatchItemWriter<CsvContent> writer) {
+        return stepBuilderFactory.get("step#001")
             .<CsvContent, CsvContent> chunk(500)
             .reader(reader())
             .processor(processor())
@@ -69,11 +69,11 @@ public class BatchConfiguration {
     }
 
     @Bean
-    public Job importUserJob(JobCompletionNotificationListener listener, Step step1) {
-        return jobBuilderFactory.get("importUserJob")
+    public Job job(JobCompletionNotificationListener listener, Step step) {
+        return jobBuilderFactory.get("job#001")
             .incrementer(new RunIdIncrementer())
             .listener(listener)
-            .flow(step1)
+            .flow(step)
             .end()
             .build();
     }
