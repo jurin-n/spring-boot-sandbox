@@ -9,12 +9,11 @@
 	<div class="container-fluid">
 	  	<div class="row">
 		    <div class="col-2">
-				<ul class="list-group">
-					<li class="list-group-item">メニュー０１</li>
-					<li class="list-group-item">メニュー０２</li>
-					<li class="list-group-item">メニュー０３</li>
-					<li class="list-group-item">メニュー０４</li>
-					<li class="list-group-item">メニュー０５</li>
+				<ul>
+					<li th:each="menuItem : ${menuItems}" th:attr="data-value=${menuItem.path}">
+					    <span th:text="${menuItem.dispName}" th:remove="tag"></span>
+					    <a href='#' class='close' aria-hidden='true'></a>
+					</li>
 				</ul>
 		    </div>
 		    <div class="col-8">
