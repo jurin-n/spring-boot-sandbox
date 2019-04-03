@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>トップページ</title>
+</head>
+<body>
+ぼデー。鷗外。
+	<table>
+		<tr th:each="topInfo : ${topInfo}">
+			<td th:text="${topInfo.id}">000001</td>
+			<td th:text="${topInfo.title}">タイトルああああ</td>
+			<td th:text="${topInfo.dateTime}">2999-12-31</td>
+		</tr>
+	</table>
+</body>
+</html>
