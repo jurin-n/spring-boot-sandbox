@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+	<meta charset="UTF-8" />
 	<title>トップページ</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -9,10 +10,11 @@
 	<div class="container-fluid">
 	  	<div class="row">
 		    <div class="col-2">
-				<ul>
-					<li th:each="menuItem : ${menuItems}" th:attr="data-value=${menuItem.path}">
-					    <span th:text="${menuItem.dispName}" th:remove="tag"></span>
-					    <a href='#' class='close' aria-hidden='true'></a>
+				<ul class="list-group">
+					<li class="list-group-item" th:each="menuItem : ${menuItems}">
+						<a th:href="${menuItem.path}" th:text="${menuItem.dispName}">
+							title
+						</a>
 					</li>
 				</ul>
 		    </div>
@@ -28,7 +30,7 @@
 				  <tbody>
 					<tr th:each="topInfo : ${topInfo}">
 						<td th:text="${topInfo.id}">000001</td>
-						<td th:text="${topInfo.title}">タイトルああああ</td>
+						<td th:text="${topInfo.title}">タイトルXXX</td>
 						<td th:text="${topInfo.dateTime}">2999-12-31</td>
 					</tr>
 				  </tbody>
