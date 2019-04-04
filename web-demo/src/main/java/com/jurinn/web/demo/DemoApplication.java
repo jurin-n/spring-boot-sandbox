@@ -1,4 +1,4 @@
-    package com.jurinn.web.demo;
+package com.jurinn.web.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

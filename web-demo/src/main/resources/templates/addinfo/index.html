@@ -24,10 +24,16 @@
 		    			<dt><label for="id">Id</label></dt>
 		    			<dd>
 		    				<input type="text" id="id" name="id" th:field="*{id}" value="1"/>
+		    				<span th:if="${#fields.hasErrors('id')}" th:errors="*{id}" class="error-messages">
+		    				error!
+		    				</span>
 		    			</dd>
 		    			<dt><label for="title">タイトル</label></dt>
 		    			<dd>
 		    				<input type="text" id="title" name="title" th:field="*{title}" value="タイトル"/>
+		    				<span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="error-messages">
+		    				error!
+		    				</span>
 		    			</dd>
 		    		</dl>
 		    		<input type="submit" value="作成"/>

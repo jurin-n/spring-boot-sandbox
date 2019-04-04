@@ -2,12 +2,14 @@ package com.jurinn.web.demo;
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class InformationForm {
     @NotNull
-    @Digits(integer=2, fraction=0)
+    @Digits(integer = 2, fraction = 0)
     private String id;
     @NotNull
+    @Size(min = 1, max = 127)
     private String title;
 
     public String getId() {
