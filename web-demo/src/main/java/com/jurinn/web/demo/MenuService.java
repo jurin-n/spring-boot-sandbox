@@ -9,10 +9,8 @@ import org.springframework.stereotype.Service;
 public class MenuService {
     public List<MenuItem> getMenuItems() {
         return Arrays.asList(
-                new MenuItem("メニュー０１","/addInfo"),
-                new MenuItem("メニュー０２","/deleteInfo"),
-                new MenuItem("メニュー０３","/list"),
-                new MenuItem("メニュー０４","/search")
+                new MenuItem("トップページ","/"),
+                new MenuItem("商品一覧","/items")
                 );
     }
 }
