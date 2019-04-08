@@ -9,7 +9,7 @@
 <body>
 	<div class="container-fluid">
 	  	<div class="row">
-		    <div class="col-2">
+		    <div class="col-3">
 				<ul class="list-group">
 					<li class="list-group-item" th:each="menuItem : ${menuItems}">
 						<a th:href="${menuItem.path}" th:text="${menuItem.dispName}">
@@ -18,7 +18,8 @@
 					</li>
 				</ul>
 		    </div>
-		    <div class="col-8">
+		    <div class="col-7">
+		    	<!--
 				<table class="table table-bordered">
 				  <thead>
 				    <tr>
@@ -35,6 +36,7 @@
 					</tr>
 				  </tbody>
 				</table>
+				-->
 		    </div>
 	    </div>
 	</div>

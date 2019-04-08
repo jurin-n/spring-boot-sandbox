@@ -13,23 +13,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/items")
 public class InformationController {
     @Autowired
     InformationService informationService;
     @Autowired
     MenuService menuService;
-
-    @GetMapping
-    String top(Model model) {
-        List<MenuItem> menuItems = menuService.getMenuItems();
-        model.addAttribute("menuItems", menuItems);
-
-        List<TopInfo> topInfo = informationService.getTopInfoList();
-        model.addAttribute("topInfo", topInfo);
-
-        return "top/index";
-    }
 
     @ModelAttribute
     InformationForm setUpForm() {
