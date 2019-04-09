@@ -4,7 +4,7 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class InformationForm {
+public class ItemForm {
     @NotNull
     @Digits(integer = 2, fraction = 0)
     private String id;

@@ -4,25 +4,23 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class InformationService {
+public class ItemService {
     @Autowired
     JdbcTemplate jdbcTemplate;
     // NamedParameterJdbcTemplate jdbcTemplate;
 
-    public List<TopInfo> getTopInfoList() {
-        List<TopInfo> topInfo = jdbcTemplate.query("SELECT id, title, datetime FROM top_info ORDER BY id",
-                (rs, row) -> new TopInfo(rs.getInt(1), rs.getString(2), rs.getString(3)));
-        return topInfo;
+    public List<Item> getItems() {
+        List<Item> items = jdbcTemplate.query("SELECT item_id, name, datetime FROM items ORDER BY datetime",
+                (rs, row) -> new Item(rs.getString("item_id"), rs.getString("name"), rs.getTimestamp("datetime")));
+        return items;
     }
 
+    /*
     @Transactional
-    public void add(Information information) {
+    public void add(Item information) {
         // TODO:SqlParameterSourceにマッピングした結果をinsertできない原因調査。
         // SqlParameterSource param = new BeanPropertySqlParameterSource(information);
         
@@ -32,4 +30,5 @@ public class InformationService {
                 information.getTitle()
         );
     }
+    */
 }
