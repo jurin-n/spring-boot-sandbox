@@ -30,6 +30,13 @@ public class ItemController {
         return "item/list";
     }
     
+    @GetMapping("/add")
+    String getItemAddPage(Model model) {
+        List<MenuItem> menuItems = menuService.getMenuItems();
+        model.addAttribute("menuItems", menuItems);
+        return "item/add";
+    }
+ 
     @GetMapping("/addInfo")
     String getAddInfo(Model model) {
         List<MenuItem> menuItems = menuService.getMenuItems();
