@@ -19,7 +19,60 @@
 				</ul>
 		    </div>
 		    <div class="col-7">
-				追加ページ
+		    	<form th:action="@{/items/add}" th:object="${itemForm}" method="post">
+		    		<dl>
+		    			<dt><label for="itemId">商品ID</label></dt>
+		    			<dd>
+		    				<input type="text" id="itemId" name="itemId" th:field="*{itemId}" value="item001"/>
+		    				<span th:if="${#fields.hasErrors('itemId')}" th:errors="*{itemId}" class="error-messages">
+		    				error!
+		    				</span>
+		    			</dd>
+		    			<dt><label for="name">商品名</label></dt>
+		    			<dd>
+		    				<input type="text" id="name" name="name" th:field="*{name}" value="商品名"/>
+		    				<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error-messages">
+		    				error!
+		    				</span>
+		    			</dd>
+		    			<dt><label for="description">説明</label></dt>
+		    			<dd>
+		    				<input type="text" id="description" name="description" th:field="*{description}" value="説明"/>
+		    				<span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error-messages">
+		    				error!
+		    				</span>
+		    			</dd>
+		    			<dt><label for="priceId">価格ID</label></dt>
+		    			<dd>
+		    				<input type="text" id="priceId" name="priceId" th:field="*{priceId}" value="price001"/>
+		    				<span th:if="${#fields.hasErrors('priceId')}" th:errors="*{priceId}" class="error-messages">
+		    				error!
+		    				</span>
+		    			</dd>
+		    			<dt><label for="price">価格</label></dt>
+		    			<dd>
+		    				<input type="text" id="price" name="price" th:field="*{price}" value="100"/>
+		    				<span th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="error-messages">
+		    				error!
+		    				</span>
+		    			</dd>
+		    			<dt><label for="activateFrom">適用開始日時</label></dt>
+		    			<dd>
+		    				<input type="text" id="activateFrom" name="activateFrom" th:text="*{#temporals.format(activateFrom, 'yyyy-MM-dd HH:mm:ss')}"/>
+		    				<span th:if="${#fields.hasErrors('activateFrom')}" th:errors="*{activateFrom}" class="error-messages">
+		    				error!
+		    				</span>
+		    			</dd>
+		    			<dt><label for="activateTo">適用終了日時</label></dt>
+		    			<dd>
+		    				<input type="text" id="activateTo" name="activateTo" th:text="*{#temporals.format(activateTo, 'yyyy/MM/dd HH:mm:ss')}"/>
+		    				<span th:if="${#fields.hasErrors('activateTo')}" th:errors="*{activateTo}" class="error-messages">
+		    				error!
+		    				</span>
+		    			</dd>
+		    		</dl>
+		    		<input type="submit" value="作成"/>
+		    	</form>
 		    </div>
 	    </div>
 	</div>

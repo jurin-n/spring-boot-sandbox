@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ItemService {
@@ -18,17 +19,27 @@ public class ItemService {
         return items;
     }
 
-    /*
     @Transactional
-    public void add(Item information) {
+    public void add(Item item, Price price) {
         // TODO:SqlParameterSourceにマッピングした結果をinsertできない原因調査。
         // SqlParameterSource param = new BeanPropertySqlParameterSource(information);
-        
+
         jdbcTemplate.update(
-                "INSERT INTO top_info(id, title) VALUES(?, ?)",
-                information.getId(),
-                information.getTitle()
+                "INSERT INTO items(item_id, name, description, datetime) VALUES(?, ?, ?, ?)",
+                item.getItemId(),
+                item.getName(),
+                item.getDescription(),
+                item.getDateTime()
         );
+
+        jdbcTemplate.update(
+                "INSERT INTO prices(price_id, activate_from, activate_to, price, item_id, datetime) VALUES(?, ?, ?, ?, ?, ?)",
+                price.getPriceId(),
+                price.getActivateFrom(),
+                price.getActivateTo(),
+                price.getPrice(),
+                item.getItemId(),
+                item.getDateTime()
+        ); 
     }
-    */
 }

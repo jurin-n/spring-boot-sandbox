@@ -8,24 +8,24 @@ public class Price implements Serializable {
      * 
      */
     private static final long serialVersionUID = 1L;
-    private String itemId;
+    private String priceId;
     private LocalDateTime activateFrom;
     private LocalDateTime activateTo;
     private Double price;
     private LocalDateTime dateTime;
 
-    public Price(String itemId, LocalDateTime activateFrom, LocalDateTime activateTo, Double price,
+    public Price(String priceId, LocalDateTime activateFrom, LocalDateTime activateTo, Double price,
             LocalDateTime dateTime) {
         super();
-        this.itemId = itemId;
+        this.priceId = priceId;
         this.activateFrom = activateFrom;
         this.activateTo = activateTo;
         this.price = price;
         this.dateTime = dateTime;
     }
 
-    public String getItemId() {
-        return itemId;
+    public String getPriceId() {
+        return priceId;
     }
 
     public LocalDateTime getActivateFrom() {
@@ -44,8 +44,8 @@ public class Price implements Serializable {
         return dateTime;
     }
 
-    public void setItemId(String itemId) {
-        this.itemId = itemId;
+    public void setPriceId(String priceId) {
+        this.priceId = priceId;
     }
 
     public void setActivateFrom(LocalDateTime activateFrom) {
