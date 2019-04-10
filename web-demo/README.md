@@ -35,6 +35,26 @@ CREATE TABLE items (
 
 CREATE UNIQUE INDEX items_pkey ON items(item_id text_ops);
 
+
+
+-- Table Definition ----------------------------------------------
+
+CREATE TABLE prices (
+    price_id character varying(64),
+    activate_from timestamp without time zone,
+    activate_to timestamp without time zone,
+    price numeric(20,10),
+    item_id character varying(64) REFERENCES items(item_id),
+    datetime timestamp without time zone,
+    CONSTRAINT prices_pkey PRIMARY KEY (price_id, activate_from, activate_to)
+);
+
+-- Indices -------------------------------------------------------
+
+CREATE UNIQUE INDEX prices_pkey ON prices(price_id text_ops,activate_from timestamp_ops,activate_to timestamp_ops);
+
+
+
 ```
 
 ### テストデータ
@@ -44,4 +64,6 @@ insert into items(item_id, name, description, datetime) values('item002','商品
 insert into items(item_id, name, description, datetime) values('item003','商品003','ああああああ', '2019-04-06T20:00:00');
 insert into items(item_id, name, description, datetime) values('item004','商品004','ああああああ', '2019-04-04T21:00:00');
 insert into items(item_id, name, description, datetime) values('item005','商品005','ああああああ', '2019-04-04T22:00:00');
+
+insert into prices(price_id, activate_from, activate_to, price,item_id,datetime) values('price001','2019-04-04T00:00:00','2020-04-03T23:59:59',10000,'item001','2019-04-04T20:00:00');
 ```
