@@ -42,13 +42,6 @@
 		    				error!
 		    				</span>
 		    			</dd>
-		    			<dt><label for="priceId">価格ID</label></dt>
-		    			<dd>
-		    				<input type="text" id="priceId" name="priceId" th:field="*{priceId}" value="price001"/>
-		    				<span th:if="${#fields.hasErrors('priceId')}" th:errors="*{priceId}" class="error-messages">
-		    				error!
-		    				</span>
-		    			</dd>
 		    			<dt><label for="price">価格</label></dt>
 		    			<dd>
 		    				<input type="text" id="price" name="price" th:field="*{price}" value="100"/>

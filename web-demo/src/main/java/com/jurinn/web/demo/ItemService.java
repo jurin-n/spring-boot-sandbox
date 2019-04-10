@@ -33,12 +33,11 @@ public class ItemService {
         );
 
         jdbcTemplate.update(
-                "INSERT INTO prices(price_id, activate_from, activate_to, price, item_id, datetime) VALUES(?, ?, ?, ?, ?, ?)",
-                price.getPriceId(),
+                "INSERT INTO prices(item_id,activate_from, activate_to, price,  datetime) VALUES(?, ?, ?, ?, ?)",
+                item.getItemId(),
                 price.getActivateFrom(),
                 price.getActivateTo(),
                 price.getPrice(),
-                item.getItemId(),
                 item.getDateTime()
         ); 
     }

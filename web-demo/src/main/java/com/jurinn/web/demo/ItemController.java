@@ -50,7 +50,7 @@ public class ItemController {
         // TODO: BeanUtilsまたは、Dozer、ModelMapper検討。はじめてのSpring Boot p100 参照。
         LocalDateTime now = LocalDateTime.now(ZoneId.of("GMT"));
         Item item = new Item(form.getItemId(),form.getName(),form.getDescription(),now);
-        Price price = new Price(form.getPriceId(),form.getActivateFrom(),form.getActivateTo(),form.getPrice(),now);
+        Price price = new Price(form.getActivateFrom(),form.getActivateTo(),form.getPrice(),now);
         
         itemService.add(item, price);
         return "redirect:/items/add";

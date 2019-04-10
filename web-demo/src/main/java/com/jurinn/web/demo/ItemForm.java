@@ -17,8 +17,6 @@ public class ItemForm {
     @Size(min = 1, max = 2048)
     private String description;
     @NotNull
-    private String priceId;
-    @NotNull
     @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
     private LocalDateTime activateFrom;
     @NotNull
@@ -37,10 +35,6 @@ public class ItemForm {
 
     public String getDescription() {
         return description;
-    }
-
-    public String getPriceId() {
-        return priceId;
     }
 
     public LocalDateTime getActivateFrom() {
@@ -65,10 +59,6 @@ public class ItemForm {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public void setPriceId(String priceId) {
-        this.priceId = priceId;
     }
 
     public void setActivateFrom(LocalDateTime activateFrom) {
