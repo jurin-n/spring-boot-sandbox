@@ -22,6 +22,7 @@
 				<table class="table table-bordered">
 				  <thead>
 				    <tr>
+				      <th scope="col">&nbsp;</th>
 				      <th scope="col">id</th>
 				      <th scope="col">商品名</th>
 				      <th scope="col">日時</th>
@@ -29,6 +30,12 @@
 				  </thead>
 				  <tbody>
 					<tr th:each="item : ${items}">
+						<td>
+							<form th:action="@{/items}" method="get">
+								<input type="hidden" name="id" th:value="${item.itemId}" />
+								<input type="submit" value="詳細"/>
+							</form>
+						</td>
 						<td th:text="${item.itemId}">000001</td>
 						<td th:text="${item.name}">商品XXX</td>
 						<td th:text="${item.dateTime}">2999-12-31</td>
