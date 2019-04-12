@@ -1,4 +1,4 @@
-package com.jurinn.web.demo;
+package com.jurinn.web.demo.service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;

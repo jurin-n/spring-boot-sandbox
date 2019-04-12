@@ -1,4 +1,4 @@
-package com.jurinn.web.demo;
+package com.jurinn.web.demo.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

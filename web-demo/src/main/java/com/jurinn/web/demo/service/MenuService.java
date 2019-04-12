@@ -1,9 +1,11 @@
-package com.jurinn.web.demo;
+package com.jurinn.web.demo.service;
 
 import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+
+import com.jurinn.web.demo.model.MenuItem;
 
 @Service
 public class MenuService {

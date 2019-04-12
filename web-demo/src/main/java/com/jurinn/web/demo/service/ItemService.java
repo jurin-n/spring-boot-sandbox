@@ -1,4 +1,4 @@
-package com.jurinn.web.demo;
+package com.jurinn.web.demo.service;
 
 import java.util.List;
 
@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.jurinn.web.demo.model.Item;
+import com.jurinn.web.demo.model.Price;
 
 @Service
 public class ItemService {

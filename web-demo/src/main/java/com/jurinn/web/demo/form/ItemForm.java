@@ -1,4 +1,4 @@
-package com.jurinn.web.demo;
+package com.jurinn.web.demo.form;
 
 import java.time.LocalDateTime;
 

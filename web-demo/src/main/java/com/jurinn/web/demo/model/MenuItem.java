@@ -1,4 +1,4 @@
-package com.jurinn.web.demo;
+package com.jurinn.web.demo.model;
 
 public class MenuItem {
     private String dispName;
