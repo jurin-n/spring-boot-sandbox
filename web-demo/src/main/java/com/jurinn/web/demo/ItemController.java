@@ -23,6 +23,8 @@ public class ItemController {
     ItemService itemService;
     @Autowired
     MenuService menuService;
+    @Autowired
+    DateAndTimeService dateAndTimeService;
 
     @ModelAttribute
     ItemForm setUpForm() {
@@ -43,7 +45,7 @@ public class ItemController {
     }
 
     private String getItemEditPage(String itemId, Model model) {
-        //TODO:DBから商品とるロジック実装。
+        // TODO:DBから商品とるロジック実装。
         System.out.println("itemId=" + itemId);
         return "item/edit";
     }
@@ -60,8 +62,9 @@ public class ItemController {
         if (result.hasErrors()) {
             return getItemAddPage(model);
         }
+
+        LocalDateTime now = dateAndTimeService.now();
         // TODO: BeanUtilsまたは、Dozer、ModelMapper検討。はじめてのSpring Boot p100 参照。
-        LocalDateTime now = LocalDateTime.now(ZoneId.of("GMT"));
         Item item = new Item(form.getItemId(), form.getName(), form.getDescription(), now);
         Price price = new Price(form.getActivateFrom(), form.getActivateTo(), form.getPrice(), now);
 
