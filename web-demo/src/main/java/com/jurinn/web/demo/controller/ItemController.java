@@ -1,6 +1,7 @@
 package com.jurinn.web.demo.controller;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jurinn.web.demo.form.ItemForm;
+import com.jurinn.web.demo.form.PriceForm;
 import com.jurinn.web.demo.model.Item;
 import com.jurinn.web.demo.model.MenuItem;
 import com.jurinn.web.demo.model.Price;
@@ -94,23 +96,26 @@ public class ItemController {
         return "item/list";
     }
 
-    @GetMapping("/add")
-    String getItemAddPage(Model model) {
+    @GetMapping(path = "add")
+    String getItemAddPage(Model model, ItemForm form) {
         List<MenuItem> menuItems = menuService.getMenuItems();
         model.addAttribute("menuItems", menuItems);
+
+        form.setPrices(Arrays.asList(new PriceForm(), new PriceForm(), new PriceForm()));
         return "item/add";
     }
 
-    @PostMapping("/add")
+    @PostMapping(path = "add")
     String addItem(@Validated ItemForm form, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return getItemAddPage(model);
+            return getItemAddPage(model, form);
         }
 
         LocalDateTime now = dateAndTimeService.now();
         // TODO: BeanUtilsまたは、Dozer、ModelMapper検討。はじめてのSpring Boot p100 参照。
         Item item = new Item(form.getItemId(), form.getName(), form.getDescription(), now);
-        Price price = new Price(form.getActivateFrom(), form.getActivateTo(), form.getPrice(), now);
+        PriceForm priceForm = form.getPrices().get(0);
+        Price price = new Price(priceForm.getActivateFrom(),priceForm.getActivateTo(),priceForm.getPrice(), now);
 
         itemService.add(item, price);
         return "redirect:/items/add";

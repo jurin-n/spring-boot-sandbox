@@ -44,6 +44,30 @@
 		    			</dd>
 		    			<dt><label for="price">価格</label></dt>
 		    			<dd>
+		    				<div class="form-row" th:each="p, priceStat: *{prices}">
+		    					<div class="col-3">
+				    				<input type="text" id="activateFrom" name="activateFrom" th:field="*{prices[__${priceStat.index}__].activateFrom}" th:text="*{#temporals.format(prices[__${priceStat.index}__].activateFrom, 'yyyy/MM/dd HH:mm:ss')}" placeholder="適用開始日(yyyy/MM/dd HH:mm:ss)"/>
+				    				<span th:if="${#fields.hasErrors('activateFrom')}" th:errors="*{prices[__${priceStat.index}__].activateFrom}" class="error-messages">
+				    				error!
+				    				</span>
+		    					</div>
+		    					<div class="col-3">
+				    				<input type="text" id="activateTo" name="activateTo" th:field="*{prices[__${priceStat.index}__].activateTo}" th:text="*{#temporals.format(prices[__${priceStat.index}__].activateTo, 'yyyy/MM/dd HH:mm:ss')}" placeholder="適用終了日(yyyy/MM/dd HH:mm:ss)"/>
+				    				<span th:if="${#fields.hasErrors('activateTo')}" th:errors="*{prices[__${priceStat.index}__].activateTo}" class="error-messages">
+				    				error!
+				    				</span>
+		    					</div>
+		    					<div class="col-4">
+				    				<input type="text" id="price" name="price" th:field="*{prices[__${priceStat.index}__].price}" value="100" placeholder="金額(円)"/>
+				    				<span th:if="${#fields.hasErrors('price')}" th:errors="*{prices[__${priceStat.index}__].price}" class="error-messages">
+				    				error!
+				    				</span>
+		    					</div>
+		    				</div>
+		    			</dd>
+		    			<!--  
+		    			<dt><label for="price">価格</label></dt>
+		    			<dd>
 		    				<input type="text" id="price" name="price" th:field="*{price}" value="100"/>
 		    				<span th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="error-messages">
 		    				error!
@@ -63,6 +87,7 @@
 		    				error!
 		    				</span>
 		    			</dd>
+		    			-->
 		    		</dl>
 		    		<input type="submit" value="作成"/>
 		    	</form>

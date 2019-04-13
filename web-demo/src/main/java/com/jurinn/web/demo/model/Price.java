@@ -21,6 +21,10 @@ public class Price implements Serializable {
         this.dateTime = dateTime;
     }
 
+    public Price() {
+        // TODO Auto-generated constructor stub
+    }
+
     public LocalDateTime getActivateFrom() {
         return activateFrom;
     }
