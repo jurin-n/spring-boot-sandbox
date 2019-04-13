@@ -22,12 +22,15 @@ import com.jurinn.web.demo.model.Price;
 import com.jurinn.web.demo.service.DateAndTimeService;
 import com.jurinn.web.demo.service.ItemService;
 import com.jurinn.web.demo.service.MenuService;
+import com.jurinn.web.demo.service.PriceService;
 
 @Controller
 @RequestMapping("/items")
 public class ItemController {
     @Autowired
     ItemService itemService;
+    @Autowired
+    PriceService priceService;
     @Autowired
     MenuService menuService;
     @Autowired
@@ -38,23 +41,57 @@ public class ItemController {
         return new ItemForm();
     }
 
-    @GetMapping
-    String getItems(@RequestParam(name = "id", required = false) Optional<String> itemId, Model model) {
+    @GetMapping(path = "edit")
+    String editForm(@RequestParam(name = "id") Optional<String> itemId, ItemForm form, Model model) {
+        if (itemId.isEmpty()) {
+            // TODO:どうするか考え中。
+            throw new RuntimeException("フォーム表示エラー");
+        }
+
         List<MenuItem> menuItems = menuService.getMenuItems();
         model.addAttribute("menuItems", menuItems);
 
-        if (itemId.isPresent()) {
-            return getItemEditPage(itemId.get(), model);
-        }
+        Item item = itemService.findOne(itemId.get());
+        List<Price> prices = priceService.find(itemId.get());
 
-        model.addAttribute("items", itemService.getItems());
-        return "item/list";
+        /* form設定 */
+        //商品情報
+        form.setItemId(itemId.get());
+        form.setName(item.getName());
+        form.setDescription(item.getDescription());
+
+        //価格情報
+        Price price = prices.get(0);
+        form.setPrice(price.getPrice());
+        form.setActivateFrom(price.getActivateFrom());
+        form.setActivateTo(price.getActivateTo());
+
+        return "item/edit";
     }
 
-    private String getItemEditPage(String itemId, Model model) {
-        // TODO:DBから商品とるロジック実装。
-        System.out.println("itemId=" + itemId);
-        return "item/edit";
+    @PostMapping(path = "edit")
+    String edit(@RequestParam(name = "id") Optional<String> itemId, @Validated ItemForm form, BindingResult result,
+            Model model) {
+        if (result.hasErrors()) {
+            return editForm(itemId, form, model);
+        }
+        LocalDateTime now = dateAndTimeService.now();
+        // TODO: BeanUtilsまたは、Dozer、ModelMapper検討。はじめてのSpring Boot p100 参照。
+        Item item = new Item(form.getItemId(), form.getName(), form.getDescription(), now);
+        Price price = new Price(form.getActivateFrom(), form.getActivateTo(), form.getPrice(), now);
+
+        // TODO:ItemとPriceが別トランザクションでupdateされてるので、これを１つのトランザクションで処理するようにする。
+        itemService.update(item);
+        priceService.update(item.getItemId(), price);
+        return "redirect:/items";
+    }
+    
+    @GetMapping
+    String getItems(Model model) {
+        List<MenuItem> menuItems = menuService.getMenuItems();
+        model.addAttribute("menuItems", menuItems);
+        model.addAttribute("items", itemService.getItems());
+        return "item/list";
     }
 
     @GetMapping("/add")

@@ -19,7 +19,7 @@
 				</ul>
 		    </div>
 		    <div class="col-7">
-		    	<form th:action="@{/items/add}" th:object="${itemForm}" method="post">
+		    	<form th:action="@{/items/edit}" th:object="${itemForm}" method="post">
 		    		<dl>
 		    			<dt><label for="itemId">商品ID</label></dt>
 		    			<dd>
@@ -51,20 +51,20 @@
 		    			</dd>
 		    			<dt><label for="activateFrom">適用開始日時</label></dt>
 		    			<dd>
-		    				<input type="text" id="activateFrom" name="activateFrom" th:text="*{#temporals.format(activateFrom, 'yyyy-MM-dd HH:mm:ss')}"/>
+		    				<input type="text" id="activateFrom" name="activateFrom" th:value="*{#temporals.format(activateFrom, 'yyyy/MM/dd HH:mm:ss')}"/>
 		    				<span th:if="${#fields.hasErrors('activateFrom')}" th:errors="*{activateFrom}" class="error-messages">
 		    				error!
 		    				</span>
 		    			</dd>
 		    			<dt><label for="activateTo">適用終了日時</label></dt>
 		    			<dd>
-		    				<input type="text" id="activateTo" name="activateTo" th:text="*{#temporals.format(activateTo, 'yyyy/MM/dd HH:mm:ss')}"/>
+		    				<input type="text" id="activateTo" name="activateTo" th:value="*{#temporals.format(activateTo, 'yyyy/MM/dd HH:mm:ss')}"/>
 		    				<span th:if="${#fields.hasErrors('activateTo')}" th:errors="*{activateTo}" class="error-messages">
 		    				error!
 		    				</span>
 		    			</dd>
 		    		</dl>
-		    		<input type="submit" value="作成"/>
+		    		<input type="submit" value="更新"/>
 		    	</form>
 		    </div>
 	    </div>

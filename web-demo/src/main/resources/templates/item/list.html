@@ -31,7 +31,7 @@
 				  <tbody>
 					<tr th:each="item : ${items}">
 						<td>
-							<form th:action="@{/items}" method="get">
+							<form th:action="@{/items/edit}" method="get">
 								<input type="hidden" name="id" th:value="${item.itemId}" />
 								<input type="submit" value="詳細"/>
 							</form>
