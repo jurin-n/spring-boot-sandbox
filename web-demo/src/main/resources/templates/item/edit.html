@@ -44,24 +44,26 @@
 		    			</dd>
 		    			<dt><label for="price">価格</label></dt>
 		    			<dd>
-		    				<input type="text" id="price" name="price" th:field="*{price}" value="100"/>
-		    				<span th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="error-messages">
-		    				error!
-		    				</span>
-		    			</dd>
-		    			<dt><label for="activateFrom">適用開始日時</label></dt>
-		    			<dd>
-		    				<input type="text" id="activateFrom" name="activateFrom" th:value="*{#temporals.format(activateFrom, 'yyyy/MM/dd HH:mm:ss')}"/>
-		    				<span th:if="${#fields.hasErrors('activateFrom')}" th:errors="*{activateFrom}" class="error-messages">
-		    				error!
-		    				</span>
-		    			</dd>
-		    			<dt><label for="activateTo">適用終了日時</label></dt>
-		    			<dd>
-		    				<input type="text" id="activateTo" name="activateTo" th:value="*{#temporals.format(activateTo, 'yyyy/MM/dd HH:mm:ss')}"/>
-		    				<span th:if="${#fields.hasErrors('activateTo')}" th:errors="*{activateTo}" class="error-messages">
-		    				error!
-		    				</span>
+		    				<div class="form-row" th:each="price, priceStat: *{prices}">
+		    					<div class="col-3">
+				    				<input type="text" id="activateFrom" name="activateFrom" th:field="*{prices[__${priceStat.index}__].activateFrom}" placeholder="適用開始日(yyyy/MM/dd HH:mm:ss)"/>
+				    				<span th:if="${#fields.hasErrors('prices[__${priceStat.index}__].activateFrom')}" th:errors="*{prices[__${priceStat.index}__].activateFrom}" class="error-messages">
+				    				error!
+				    				</span>
+		    					</div>
+		    					<div class="col-3">
+				    				<input type="text" id="activateTo" name="activateTo" th:field="*{prices[__${priceStat.index}__].activateTo}" placeholder="適用終了日(yyyy/MM/dd HH:mm:ss)"/>
+				    				<span th:if="${#fields.hasErrors('prices[__${priceStat.index}__].activateTo')}" th:errors="*{prices[__${priceStat.index}__].activateTo}" class="error-messages">
+				    				error!
+				    				</span>
+		    					</div>
+		    					<div class="col-4">
+				    				<input type="text" id="amount" name="amount" th:field="*{prices[__${priceStat.index}__].amount}" value="100" placeholder="金額(円)"/>
+				    				<span th:if="${#fields.hasErrors('prices[__${priceStat.index}__].amount')}" th:errors="*{prices[__${priceStat.index}__].amount}" class="error-messages">
+				    				error!
+				    				</span>
+		    					</div>
+		    				</div>
 		    			</dd>
 		    		</dl>
 		    		<input type="submit" value="更新"/>
