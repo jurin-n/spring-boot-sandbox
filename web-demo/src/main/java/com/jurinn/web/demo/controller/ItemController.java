@@ -64,9 +64,11 @@ public class ItemController {
 
         //価格情報
         Price price = prices.get(0);
-        form.setPrice(price.getPrice());
-        form.setActivateFrom(price.getActivateFrom());
-        form.setActivateTo(price.getActivateTo());
+        PriceForm priceForm = new PriceForm();
+        priceForm.setAmount(price.getAmount());
+        priceForm.setActivateFrom(price.getActivateFrom());
+        priceForm.setActivateTo(price.getActivateTo());
+        form.setPrices(Arrays.asList(priceForm));
 
         return "item/edit";
     }
@@ -80,7 +82,8 @@ public class ItemController {
         LocalDateTime now = dateAndTimeService.now();
         // TODO: BeanUtilsまたは、Dozer、ModelMapper検討。はじめてのSpring Boot p100 参照。
         Item item = new Item(form.getItemId(), form.getName(), form.getDescription(), now);
-        Price price = new Price(form.getActivateFrom(), form.getActivateTo(), form.getPrice(), now);
+        PriceForm priceForm = form.getPrices().get(0);
+        Price price = new Price(priceForm.getActivateFrom(), priceForm.getActivateTo(), priceForm.getAmount(), now);
 
         // TODO:ItemとPriceが別トランザクションでupdateされてるので、これを１つのトランザクションで処理するようにする。
         itemService.update(item);
@@ -115,7 +118,7 @@ public class ItemController {
         // TODO: BeanUtilsまたは、Dozer、ModelMapper検討。はじめてのSpring Boot p100 参照。
         Item item = new Item(form.getItemId(), form.getName(), form.getDescription(), now);
         PriceForm priceForm = form.getPrices().get(0);
-        Price price = new Price(priceForm.getActivateFrom(),priceForm.getActivateTo(),priceForm.getPrice(), now);
+        Price price = new Price(priceForm.getActivateFrom(),priceForm.getActivateTo(),priceForm.getAmount(), now);
 
         itemService.add(item, price);
         return "redirect:/items/add";

@@ -17,14 +17,14 @@ public class PriceService {
     NamedParameterJdbcTemplate jdbcTemplate;
 
     public List<Price> find(String itemId) {
-        String sql = "SELECT activate_from,activate_to,price,datetime FROM prices WHERE item_id = :itemId";
+        String sql = "SELECT activate_from,activate_to,amount,datetime FROM prices WHERE item_id = :itemId";
         SqlParameterSource param = new MapSqlParameterSource().addValue("itemId", itemId);
 
         List<Price> prices = jdbcTemplate.query(sql, param,
                 (rs, row) -> new Price(
                                 rs.getTimestamp("activate_from").toLocalDateTime(),
                                 rs.getTimestamp("activate_to").toLocalDateTime(),
-                                rs.getDouble("price"),
+                                rs.getDouble("amount"),
                                 rs.getTimestamp("datetime").toLocalDateTime()
                         )
                 );
@@ -34,9 +34,9 @@ public class PriceService {
 
     @Transactional
     public void update(String itemId, Price price) {
-        String sql = "UPDATE prices SET price=:price,datetime=:datetime WHERE item_id=:itemId AND activate_from=:activateFrom AND activate_to=:activateTo";
+        String sql = "UPDATE prices SET amount=:amount,datetime=:datetime WHERE item_id=:itemId AND activate_from=:activateFrom AND activate_to=:activateTo";
         SqlParameterSource param = new MapSqlParameterSource()
-                .addValue("price", price.getPrice())
+                .addValue("amount", price.getAmount())
                 .addValue("datetime", price.getDateTime())
                 .addValue("itemId", itemId)
                 .addValue("activateFrom", price.getActivateFrom())

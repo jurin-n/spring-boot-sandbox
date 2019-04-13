@@ -10,19 +10,15 @@ public class Price implements Serializable {
     private static final long serialVersionUID = 1L;
     private LocalDateTime activateFrom;
     private LocalDateTime activateTo;
-    private Double price;
+    private Double amount;
     private LocalDateTime dateTime;
 
-    public Price(LocalDateTime activateFrom, LocalDateTime activateTo, Double price, LocalDateTime dateTime) {
+    public Price(LocalDateTime activateFrom, LocalDateTime activateTo, Double amount, LocalDateTime dateTime) {
         super();
         this.activateFrom = activateFrom;
         this.activateTo = activateTo;
-        this.price = price;
+        this.amount = amount;
         this.dateTime = dateTime;
-    }
-
-    public Price() {
-        // TODO Auto-generated constructor stub
     }
 
     public LocalDateTime getActivateFrom() {
@@ -33,8 +29,8 @@ public class Price implements Serializable {
         return activateTo;
     }
 
-    public Double getPrice() {
-        return price;
+    public Double getAmount() {
+        return amount;
     }
 
     public LocalDateTime getDateTime() {
@@ -49,8 +45,8 @@ public class Price implements Serializable {
         this.activateTo = activateTo;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
+    public void setAmount(Double amount) {
+        this.amount = amount;
     }
 
     public void setDateTime(LocalDateTime dateTime) {

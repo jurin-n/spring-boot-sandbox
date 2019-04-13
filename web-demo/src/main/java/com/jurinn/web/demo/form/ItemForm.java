@@ -1,6 +1,5 @@
 package com.jurinn.web.demo.form;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -16,14 +15,6 @@ public class ItemForm {
     private String name;
     @Size(min = 1, max = 2048)
     private String description;
-    //@NotNull
-    //@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
-    private LocalDateTime activateFrom;
-    //@NotNull
-    //@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
-    private LocalDateTime activateTo;
-    //@NotNull
-    private Double price;
     @Valid
     private List<PriceForm> prices;
 
@@ -37,18 +28,6 @@ public class ItemForm {
 
     public String getDescription() {
         return description;
-    }
-
-    public LocalDateTime getActivateFrom() {
-        return activateFrom;
-    }
-
-    public LocalDateTime getActivateTo() {
-        return activateTo;
-    }
-
-    public Double getPrice() {
-        return price;
     }
 
     public List<PriceForm> getPrices() {
@@ -65,18 +44,6 @@ public class ItemForm {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public void setActivateFrom(LocalDateTime activateFrom) {
-        this.activateFrom = activateFrom;
-    }
-
-    public void setActivateTo(LocalDateTime activateTo) {
-        this.activateTo = activateTo;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
     }
 
     public void setPrices(List<PriceForm> prices) {

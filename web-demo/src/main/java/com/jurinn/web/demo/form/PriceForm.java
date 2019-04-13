@@ -9,7 +9,7 @@ public class PriceForm {
     private LocalDateTime activateFrom;
     @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
     private LocalDateTime activateTo;
-    private Double price;
+    private Double amount;
 
     public LocalDateTime getActivateFrom() {
         return activateFrom;
@@ -19,8 +19,8 @@ public class PriceForm {
         return activateTo;
     }
 
-    public Double getPrice() {
-        return price;
+    public Double getAmount() {
+        return amount;
     }
 
     public void setActivateFrom(LocalDateTime activateFrom) {
@@ -31,7 +31,7 @@ public class PriceForm {
         this.activateTo = activateTo;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
+    public void setAmount(Double amount) {
+        this.amount = amount;
     }
 }

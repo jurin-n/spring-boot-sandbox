@@ -46,7 +46,7 @@ CREATE TABLE prices (
     item_id character varying(64) REFERENCES items(item_id),
     activate_from timestamp without time zone,
     activate_to timestamp without time zone,
-    price numeric(20,10),
+    amount numeric(20,10),
     datetime timestamp without time zone,
     CONSTRAINT prices_pkey PRIMARY KEY (item_id, activate_from, activate_to)
 );
@@ -67,5 +67,5 @@ insert into items(item_id, name, description, datetime) values('item003','商品
 insert into items(item_id, name, description, datetime) values('item004','商品004','ああああああ', '2019-04-04T21:00:00');
 insert into items(item_id, name, description, datetime) values('item005','商品005','ああああああ', '2019-04-04T22:00:00');
 
-insert into prices(item_id,activate_from, activate_to, price,datetime) values('item001','2019-04-04T00:00:00','2020-04-03T23:59:59',10000,'2019-04-04T20:00:00');
+insert into prices(item_id,activate_from, activate_to, amount,datetime) values('item001','2019-04-04T00:00:00','2020-04-03T23:59:59',10000,'2019-04-04T20:00:00');
 ```

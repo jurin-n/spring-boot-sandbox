@@ -36,8 +36,8 @@ public class ItemService {
                 item.getItemId(), item.getName(), item.getDescription(), item.getDateTime());
 
         jdbcTemplate.update(
-                "INSERT INTO prices(item_id,activate_from, activate_to, price,  datetime) VALUES(?, ?, ?, ?, ?)",
-                item.getItemId(), price.getActivateFrom(), price.getActivateTo(), price.getPrice(), item.getDateTime());
+                "INSERT INTO prices(item_id,activate_from, activate_to, amount,  datetime) VALUES(?, ?, ?, ?, ?)",
+                item.getItemId(), price.getActivateFrom(), price.getActivateTo(), price.getAmount(), item.getDateTime());
     }
 
     public Item findOne(String itemId) {
