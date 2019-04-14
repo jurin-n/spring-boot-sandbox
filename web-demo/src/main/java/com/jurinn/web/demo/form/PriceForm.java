@@ -1,37 +1,38 @@
 package com.jurinn.web.demo.form;
 
-import java.time.LocalDateTime;
+import javax.validation.constraints.Digits;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import com.jurinn.web.demo.form.validation.LocalDateTimeFormat;
 
 public class PriceForm {
-    @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
-    private LocalDateTime activateFrom;
-    @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
-    private LocalDateTime activateTo;
-    private Double amount;
+    @LocalDateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
+    private String activateFrom;
+    @LocalDateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
+    private String activateTo;
+    @Digits(integer = 10, fraction = 10)
+    private String amount;
 
-    public LocalDateTime getActivateFrom() {
+    public String getActivateFrom() {
         return activateFrom;
     }
 
-    public LocalDateTime getActivateTo() {
+    public String getActivateTo() {
         return activateTo;
     }
 
-    public Double getAmount() {
+    public String getAmount() {
         return amount;
     }
 
-    public void setActivateFrom(LocalDateTime activateFrom) {
+    public void setActivateFrom(String activateFrom) {
         this.activateFrom = activateFrom;
     }
 
-    public void setActivateTo(LocalDateTime activateTo) {
+    public void setActivateTo(String activateTo) {
         this.activateTo = activateTo;
     }
 
-    public void setAmount(Double amount) {
+    public void setAmount(String amount) {
         this.amount = amount;
     }
 }

@@ -69,3 +69,12 @@ insert into items(item_id, name, description, datetime) values('item005','商品
 
 insert into prices(item_id,activate_from, activate_to, amount,datetime) values('item001','2019-04-04T00:00:00','2020-04-03T23:59:59',10000,'2019-04-04T20:00:00');
 ```
+
+
+# 参考ドキュメント
+Hibernate Validator http://hibernate.org/validator/documentation/
+
+
+
+mvn test -Dtest=CustomValidatorTest test
+

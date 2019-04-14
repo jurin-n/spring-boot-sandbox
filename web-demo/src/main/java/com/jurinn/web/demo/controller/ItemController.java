@@ -1,6 +1,7 @@
 package com.jurinn.web.demo.controller;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -65,9 +66,11 @@ public class ItemController {
         //価格情報
         Price price = prices.get(0);
         PriceForm priceForm = new PriceForm();
-        priceForm.setAmount(price.getAmount());
-        priceForm.setActivateFrom(price.getActivateFrom());
-        priceForm.setActivateTo(price.getActivateTo());
+        priceForm.setAmount(String.valueOf(price.getAmount()));
+        priceForm.setActivateFrom(
+                DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss").format(price.getActivateFrom()));
+        priceForm.setActivateTo(
+                DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss").format(price.getActivateTo()));
         form.setPrices(Arrays.asList(priceForm));
 
         return "item/edit";
@@ -83,7 +86,11 @@ public class ItemController {
         // TODO: BeanUtilsまたは、Dozer、ModelMapper検討。はじめてのSpring Boot p100 参照。
         Item item = new Item(form.getItemId(), form.getName(), form.getDescription(), now);
         PriceForm priceForm = form.getPrices().get(0);
-        Price price = new Price(priceForm.getActivateFrom(), priceForm.getActivateTo(), priceForm.getAmount(), now);
+        Price price = new Price(
+                LocalDateTime.from(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss").parse(priceForm.getActivateFrom())),
+                LocalDateTime.from(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss").parse(priceForm.getActivateTo())),
+                Double.valueOf(priceForm.getAmount()),
+                now);
 
         // TODO:ItemとPriceが別トランザクションでupdateされてるので、これを１つのトランザクションで処理するようにする。
         itemService.update(item);
@@ -118,7 +125,11 @@ public class ItemController {
         // TODO: BeanUtilsまたは、Dozer、ModelMapper検討。はじめてのSpring Boot p100 参照。
         Item item = new Item(form.getItemId(), form.getName(), form.getDescription(), now);
         PriceForm priceForm = form.getPrices().get(0);
-        Price price = new Price(priceForm.getActivateFrom(),priceForm.getActivateTo(),priceForm.getAmount(), now);
+        Price price = new Price(
+                LocalDateTime.from(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss").parse(priceForm.getActivateFrom())),
+                LocalDateTime.from(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss").parse(priceForm.getActivateTo())),
+                Double.valueOf(priceForm.getAmount()),
+                now);
 
         itemService.add(item, price);
         return "redirect:/items/add";
