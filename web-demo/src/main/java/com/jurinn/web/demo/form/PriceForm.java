@@ -1,15 +1,14 @@
 package com.jurinn.web.demo.form;
 
-import javax.validation.constraints.Digits;
-
 import com.jurinn.web.demo.form.validation.LocalDateTimeFormat;
+import com.jurinn.web.demo.form.validation.PriceAmountFormat;
 
 public class PriceForm {
     @LocalDateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
     private String activateFrom;
     @LocalDateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
     private String activateTo;
-    @Digits(integer = 10, fraction = 10)
+    @PriceAmountFormat(integer = 10, fraction = 10)
     private String amount;
 
     public String getActivateFrom() {

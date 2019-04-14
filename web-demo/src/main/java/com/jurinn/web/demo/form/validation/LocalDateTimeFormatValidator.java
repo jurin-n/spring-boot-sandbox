@@ -16,7 +16,7 @@ public class LocalDateTimeFormatValidator implements ConstraintValidator<LocalDa
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        if(value == null) {
+        if (value == null || value.length() == 0) {
             return true;
         }
         try {
@@ -26,5 +26,4 @@ public class LocalDateTimeFormatValidator implements ConstraintValidator<LocalDa
         }
         return true;
     }
-
 }
