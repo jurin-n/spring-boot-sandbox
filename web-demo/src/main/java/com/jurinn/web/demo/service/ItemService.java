@@ -1,8 +1,12 @@
 package com.jurinn.web.demo.service;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -28,37 +32,49 @@ public class ItemService {
     }
 
     @Transactional
-    public void add(Item item, Price price) {
+    public void add(Item item, List<Price> prices) {
         // TODO:SqlParameterSourceにマッピングした結果をinsertできない原因調査。
         // SqlParameterSource param = new BeanPropertySqlParameterSource(information);
 
         jdbcTemplate.update("INSERT INTO items(item_id, name, description, datetime) VALUES(?, ?, ?, ?)",
                 item.getItemId(), item.getName(), item.getDescription(), item.getDateTime());
 
-        jdbcTemplate.update(
+        jdbcTemplate.batchUpdate(
                 "INSERT INTO prices(item_id,activate_from, activate_to, amount,  datetime) VALUES(?, ?, ?, ?, ?)",
-                item.getItemId(), price.getActivateFrom(), price.getActivateTo(), price.getAmount(), item.getDateTime());
+                new BatchPreparedStatementSetter() {
+                    @Override
+                    public void setValues(PreparedStatement ps, int i) throws SQLException {
+                        Price price = prices.get(i);
+                        ps.setString(1, item.getItemId());
+                        ps.setTimestamp(2, Timestamp.valueOf(price.getActivateFrom()));
+                        ps.setTimestamp(3, Timestamp.valueOf(price.getActivateTo()));
+                        ps.setDouble(4, price.getAmount());
+                        ps.setTimestamp(5, Timestamp.valueOf(item.getDateTime()));
+                    }
+
+                    @Override
+                    public int getBatchSize() {
+                        return prices.size();
+                    }
+                });
     }
 
     public Item findOne(String itemId) {
         String sql = "SELECT item_id, name, description, datetime FROM items WHERE item_id=:itemId";
         SqlParameterSource param = new MapSqlParameterSource().addValue("itemId", itemId);
 
-        Item item = nJdbcTemplate.queryForObject(sql, param,
-                (rs, row) -> new Item(rs.getString("item_id"), rs.getString("name"), rs.getString("description"),
-                        rs.getTimestamp("datetime").toLocalDateTime()));
+        Item item = nJdbcTemplate.queryForObject(sql, param, (rs, row) -> new Item(rs.getString("item_id"),
+                rs.getString("name"), rs.getString("description"), rs.getTimestamp("datetime").toLocalDateTime()));
         return item;
     }
 
     @Transactional
     public void update(Item item) {
         String sql = "UPDATE items SET name=:name,description=:description,datetime=:datetime WHERE item_id=:itemId";
-        SqlParameterSource param = new MapSqlParameterSource()
-                .addValue("name", item.getName())
-                .addValue("description", item.getDescription())
-                .addValue("datetime", item.getDateTime())
+        SqlParameterSource param = new MapSqlParameterSource().addValue("name", item.getName())
+                .addValue("description", item.getDescription()).addValue("datetime", item.getDateTime())
                 .addValue("itemId", item.getItemId());
 
-        nJdbcTemplate.update(sql, param);   
+        nJdbcTemplate.update(sql, param);
     }
 }

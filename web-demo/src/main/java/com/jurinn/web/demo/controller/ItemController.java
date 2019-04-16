@@ -2,6 +2,7 @@ package com.jurinn.web.demo.controller;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -124,14 +125,21 @@ public class ItemController {
         LocalDateTime now = dateAndTimeService.now();
         // TODO: BeanUtilsまたは、Dozer、ModelMapper検討。はじめてのSpring Boot p100 参照。
         Item item = new Item(form.getItemId(), form.getName(), form.getDescription(), now);
-        PriceForm priceForm = form.getPrices().get(0);
-        Price price = new Price(
-                LocalDateTime.from(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss").parse(priceForm.getActivateFrom())),
-                LocalDateTime.from(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss").parse(priceForm.getActivateTo())),
-                Double.valueOf(priceForm.getAmount()),
-                now);
 
-        itemService.add(item, price);
+        List<Price> prices = new ArrayList<>();
+        for (PriceForm priceForm : form.getPrices()) {
+            if (!priceForm.getActivateFrom().isBlank() && !priceForm.getActivateTo().isBlank()) {
+                Price price = new Price(
+                        LocalDateTime.from(
+                                DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss").parse(priceForm.getActivateFrom())),
+                        LocalDateTime.from(
+                                DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss").parse(priceForm.getActivateTo())),
+                        Double.valueOf(priceForm.getAmount()), now);
+                prices.add(price);
+            }
+        }
+
+        itemService.add(item, prices);
         return "redirect:/items/add";
     }
 }
