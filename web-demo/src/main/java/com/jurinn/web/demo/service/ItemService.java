@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -63,9 +64,13 @@ public class ItemService {
         String sql = "SELECT item_id, name, description, datetime FROM items WHERE item_id=:itemId";
         SqlParameterSource param = new MapSqlParameterSource().addValue("itemId", itemId);
 
-        Item item = nJdbcTemplate.queryForObject(sql, param, (rs, row) -> new Item(rs.getString("item_id"),
-                rs.getString("name"), rs.getString("description"), rs.getTimestamp("datetime").toLocalDateTime()));
-        return item;
+        try {
+            Item item = nJdbcTemplate.queryForObject(sql, param, (rs, row) -> new Item(rs.getString("item_id"),
+                    rs.getString("name"), rs.getString("description"), rs.getTimestamp("datetime").toLocalDateTime()));
+            return item;
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     @Transactional
