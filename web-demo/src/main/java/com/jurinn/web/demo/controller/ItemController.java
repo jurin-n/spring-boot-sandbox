@@ -89,6 +89,7 @@ public class ItemController {
         Item item = new Item(form.getItemId(), form.getName(), form.getDescription(), now);
         PriceForm priceForm = form.getPrices().get(0);
         Price price = new Price(
+                Integer.valueOf(priceForm.getVersion()),
                 LocalDateTime.from(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss").parse(priceForm.getActivateFrom())),
                 LocalDateTime.from(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss").parse(priceForm.getActivateTo())),
                 Double.valueOf(priceForm.getAmount()),
@@ -113,7 +114,7 @@ public class ItemController {
         List<MenuItem> menuItems = menuService.getMenuItems();
         model.addAttribute("menuItems", menuItems);
 
-        form.setPrices(Arrays.asList(new PriceForm(), new PriceForm(), new PriceForm()));
+        form.setPrices(Arrays.asList(new PriceForm("1"), new PriceForm("2"), new PriceForm("3")));
         return "item/add";
     }
 
@@ -139,6 +140,7 @@ public class ItemController {
         for (PriceForm priceForm : form.getPrices()) {
             if (!priceForm.getActivateFrom().isBlank() && !priceForm.getActivateTo().isBlank()) {
                 Price price = new Price(
+                        Integer.valueOf(priceForm.getVersion()),
                         LocalDateTime.from(
                                 DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss").parse(priceForm.getActivateFrom())),
                         LocalDateTime.from(

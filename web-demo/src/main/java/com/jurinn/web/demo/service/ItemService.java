@@ -41,16 +41,17 @@ public class ItemService {
                 item.getItemId(), item.getName(), item.getDescription(), item.getDateTime());
 
         jdbcTemplate.batchUpdate(
-                "INSERT INTO prices(item_id,activate_from, activate_to, amount,  datetime) VALUES(?, ?, ?, ?, ?)",
+                "INSERT INTO prices(item_id, version, activate_from, activate_to, amount,  datetime) VALUES(?, ?, ?, ?, ?, ?)",
                 new BatchPreparedStatementSetter() {
                     @Override
                     public void setValues(PreparedStatement ps, int i) throws SQLException {
                         Price price = prices.get(i);
                         ps.setString(1, item.getItemId());
-                        ps.setTimestamp(2, Timestamp.valueOf(price.getActivateFrom()));
-                        ps.setTimestamp(3, Timestamp.valueOf(price.getActivateTo()));
-                        ps.setDouble(4, price.getAmount());
-                        ps.setTimestamp(5, Timestamp.valueOf(item.getDateTime()));
+                        ps.setInt(2, price.getVersion());
+                        ps.setTimestamp(3, Timestamp.valueOf(price.getActivateFrom()));
+                        ps.setTimestamp(4, Timestamp.valueOf(price.getActivateTo()));
+                        ps.setDouble(5, price.getAmount());
+                        ps.setTimestamp(6, Timestamp.valueOf(item.getDateTime()));
                     }
 
                     @Override

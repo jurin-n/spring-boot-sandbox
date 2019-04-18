@@ -17,11 +17,12 @@ public class PriceService {
     NamedParameterJdbcTemplate jdbcTemplate;
 
     public List<Price> find(String itemId) {
-        String sql = "SELECT activate_from,activate_to,amount,datetime FROM prices WHERE item_id = :itemId";
+        String sql = "SELECT version,activate_from,activate_to,amount,datetime FROM prices WHERE item_id = :itemId";
         SqlParameterSource param = new MapSqlParameterSource().addValue("itemId", itemId);
 
         List<Price> prices = jdbcTemplate.query(sql, param,
                 (rs, row) -> new Price(
+                                rs.getInt("version"),
                                 rs.getTimestamp("activate_from").toLocalDateTime(),
                                 rs.getTimestamp("activate_to").toLocalDateTime(),
                                 rs.getDouble("amount"),
