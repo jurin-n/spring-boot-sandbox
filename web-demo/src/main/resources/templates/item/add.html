@@ -46,13 +46,13 @@
 		    			<dd>
 		    				<div class="form-row" th:each="price, priceStat: *{prices}">
 		    					<div class="col-3">
-				    				<input type="text" id="activateFrom" name="activateFrom" th:field="*{prices[__${priceStat.index}__].activateFrom}" th:text="*{#temporals.format(prices[__${priceStat.index}__].activateFrom, 'yyyy/MM/dd HH:mm:ss')}" placeholder="適用開始日(yyyy/MM/dd HH:mm:ss)"/>
+				    				<input type="text" id="activateFrom" name="activateFrom" th:field="*{prices[__${priceStat.index}__].activateFrom}" placeholder="適用開始日(yyyy/MM/dd HH:mm:ss)"/>
 				    				<span th:if="${#fields.hasErrors('prices[__${priceStat.index}__].activateFrom')}" th:errors="*{prices[__${priceStat.index}__].activateFrom}" class="error-messages">
 				    				error!
 				    				</span>
 		    					</div>
 		    					<div class="col-3">
-				    				<input type="text" id="activateTo" name="activateTo" th:field="*{prices[__${priceStat.index}__].activateTo}" th:text="*{#temporals.format(prices[__${priceStat.index}__].activateTo, 'yyyy/MM/dd HH:mm:ss')}" placeholder="適用終了日(yyyy/MM/dd HH:mm:ss)"/>
+				    				<input type="text" id="activateTo" name="activateTo" th:field="*{prices[__${priceStat.index}__].activateTo}" placeholder="適用終了日(yyyy/MM/dd HH:mm:ss)"/>
 				    				<span th:if="${#fields.hasErrors('prices[__${priceStat.index}__].activateTo')}" th:errors="*{prices[__${priceStat.index}__].activateTo}" class="error-messages">
 				    				error!
 				    				</span>
