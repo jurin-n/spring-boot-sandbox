@@ -89,4 +89,29 @@ public class PriceFormTest {
         assertThat(vRet.size(), is(1));
         assertThat(getFiledName(vRet), is("amount"));
     }
+    
+    @Test
+    public void testActivateToはActivateFromより過去日になる場合エラー() {
+        Set<ConstraintViolation<PriceForm>> vRet;
+
+        PriceForm priceForm01 = new PriceForm();
+        priceForm01.setVersion("1");
+        priceForm01.setActivateFrom("2020/04/01 00:00:00");
+        priceForm01.setActivateTo("2020/04/01 00:00:01");
+        priceForm01.setAmount("100");
+
+        vRet = validator.validate(priceForm01);
+        assertTrue(vRet.isEmpty());
+
+        PriceForm priceForm02 = new PriceForm();
+        priceForm02.setVersion("1");
+        priceForm02.setActivateFrom("2020/04/01 00:00:00");
+        priceForm02.setActivateTo("2020/03/31 23:59:59");
+        priceForm02.setAmount("100");
+
+        vRet = validator.validate(priceForm02);
+        assertFalse(vRet.isEmpty());
+        assertThat(vRet.size(), is(1));
+        assertThat(getFiledName(vRet), is("activateTo"));
+    }
 }
