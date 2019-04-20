@@ -21,6 +21,9 @@ public class PriceForm {
 
     public PriceForm(String version) {
         this.version = version;
+        this.activateFrom = "";
+        this.activateTo = "";
+        this.amount = "";
     }
 
     public PriceForm() {

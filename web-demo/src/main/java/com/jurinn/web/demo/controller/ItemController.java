@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -123,13 +124,6 @@ public class ItemController {
             return getItemAddPage(model, form, true);
         }
 
-        if (itemService.findOne(form.getItemId()) != null) {
-            // 商品ID重複エラー
-            FieldError error = new FieldError("itemForm", "itemId", form.getItemId(), false, null, null, "登録ずみ");
-            result.addError(error);
-            return getItemAddPage(model, form, true);
-        }
-
         LocalDateTime now = dateAndTimeService.now();
         // TODO: BeanUtilsまたは、Dozer、ModelMapper検討。はじめてのSpring Boot p100 参照。
         Item item = new Item(form.getItemId(), form.getName(), form.getDescription(), now);
@@ -145,6 +139,29 @@ public class ItemController {
                         Double.valueOf(priceForm.getAmount()), now);
                 prices.add(price);
             }
+        }
+
+        // 商品ID重複チェック
+        if (itemService.findOne(item.getItemId()) != null) {
+            // 商品ID重複エラー
+            FieldError error = new FieldError("itemForm", "itemId", form.getItemId(), false, null, null, "登録ずみ");
+            result.addError(error);
+            return getItemAddPage(model, form, true);
+        }
+
+        // 価格の適用期間のチェック
+        List<Map<String, Integer>> errors = Price.checkApplicablePeriodOfPrices(prices);
+        if (errors.size() > 0) {
+            for (Map<String, Integer> error : errors) {
+                Integer to = error.get("to");
+                Integer from = error.get("from");
+                // TODO:エラーメッセージ考える。
+                result.addError(new FieldError("itemForm", "prices[" + to + "].activateTo",
+                        form.getPrices().get(to).getActivateTo(), false, null, null, "activateToエラー"));
+                result.addError(new FieldError("itemForm", "prices[" + from + "].activateFrom",
+                        form.getPrices().get(from).getActivateFrom(), false, null, null, "activateFromエラー"));
+            }
+            return getItemAddPage(model, form, true);
         }
 
         itemService.add(item, prices);
