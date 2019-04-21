@@ -5,6 +5,10 @@ docker run --name postgres-dev -e POSTGRES_PASSWORD=dev123 -p 5432:5432 -d postg
 ```
 
 ```
+docker start postgres-dev
+```
+
+```
 ユーザー：postgres
 パスワード：dev123
 データーベース：postgres

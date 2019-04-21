@@ -3,6 +3,7 @@ package com.jurinn.web.demo.model;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Item implements Serializable {
     /**
@@ -12,7 +13,13 @@ public class Item implements Serializable {
     private String itemId;
     private String name;
     private String description;
+    private List<Price> prices;
     private LocalDateTime dateTime;
+
+    public Item() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
     public Item(String itemId, String name, String description, LocalDateTime dateTime) {
         super();
@@ -31,6 +38,14 @@ public class Item implements Serializable {
 
     public static long getSerialversionuid() {
         return serialVersionUID;
+    }
+
+    public List<Price> getPrices() {
+        return prices;
+    }
+
+    public void setPrices(List<Price> prices) {
+        this.prices = prices;
     }
 
     public String getItemId() {
