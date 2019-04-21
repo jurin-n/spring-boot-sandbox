@@ -22,12 +22,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jurinn.web.demo.model.Item;
 import com.jurinn.web.demo.model.Price;
 import com.jurinn.web.demo.repository.ItemRepository;
+import com.jurinn.web.demo.service.ItemService;
 
 @RestController
 @RequestMapping("api/items")
 public class ItemRestController {
     @Autowired
-    ItemRepository itemService;
+    ItemService itemService;
 
     LocalDateTime editStrintToLocalDateTime(String value) {
         return LocalDateTime.from(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss").parse(value));
@@ -59,33 +60,7 @@ public class ItemRestController {
             // TODO:どうするか考え中
             throw new RuntimeException("エラー");
         }
-
-        Item item = postedItem.get("item");
-
-        // 商品ID重複チェック
-        if (itemService.findOne(item.getItemId()) != null) {
-            // 商品ID重複エラー
-            FieldError error = new FieldError("itemForm", "itemId", item.getItemId(), false, null, null, "登録ずみ");
-            result.addError(error);
-            throw new RuntimeException("商品ID重複チェックエラー");
-        }
-
-        // 価格の適用期間のチェック
-        List<Map<String, Integer>> errors = Price.checkApplicablePeriodOfPrices(item.getPrices());
-        if (errors.size() > 0) {
-            for (Map<String, Integer> error : errors) {
-                Integer to = error.get("to");
-                Integer from = error.get("from");
-                // TODO:エラーメッセージ考える。
-                result.addError(new FieldError("itemForm", "prices[" + to + "].activateTo",
-                        item.getPrices().get(to).getActivateTo(), false, null, null, "activateToエラー"));
-                result.addError(new FieldError("itemForm", "prices[" + from + "].activateFrom",
-                        item.getPrices().get(from).getActivateFrom(), false, null, null, "activateFromエラー"));
-            }
-            throw new RuntimeException("価格の適用期間のチェックエラー");
-        }
-
-        itemService.add(item, item.getPrices());
+        itemService.add(postedItem.get("item"));
         return postedItem;
     }
 }

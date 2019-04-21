@@ -12,13 +12,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Repository;
 
 import com.jurinn.web.demo.model.Item;
 import com.jurinn.web.demo.model.Price;
 
-@Service
+@Repository
 public class ItemRepository {
     // TODO:JdbcTemplateで作ったコードをNamedParameterJdbcTemplateに移行。
     @Autowired
@@ -32,7 +31,6 @@ public class ItemRepository {
         return items;
     }
 
-    @Transactional
     public void add(Item item, List<Price> prices) {
         // TODO:SqlParameterSourceにマッピングした結果をinsertできない原因調査。
         // SqlParameterSource param = new BeanPropertySqlParameterSource(information);
@@ -74,7 +72,6 @@ public class ItemRepository {
         }
     }
 
-    @Transactional
     public void update(Item item) {
         String sql = "UPDATE items SET name=:name,description=:description,datetime=:datetime WHERE item_id=:itemId";
         SqlParameterSource param = new MapSqlParameterSource().addValue("name", item.getName())
