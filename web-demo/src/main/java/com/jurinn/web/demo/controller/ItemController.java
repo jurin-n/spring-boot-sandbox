@@ -26,7 +26,7 @@ import com.jurinn.web.demo.model.Item;
 import com.jurinn.web.demo.model.MenuItem;
 import com.jurinn.web.demo.model.Price;
 import com.jurinn.web.demo.service.DateAndTimeService;
-import com.jurinn.web.demo.service.ItemService;
+import com.jurinn.web.demo.repository.ItemRepository;
 import com.jurinn.web.demo.service.MenuService;
 import com.jurinn.web.demo.service.PriceService;
 
@@ -34,7 +34,7 @@ import com.jurinn.web.demo.service.PriceService;
 @RequestMapping("/items")
 public class ItemController {
     @Autowired
-    ItemService itemService;
+    ItemRepository itemService;
     @Autowired
     PriceService priceService;
     @Autowired

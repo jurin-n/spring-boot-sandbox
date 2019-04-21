@@ -1,4 +1,4 @@
-package com.jurinn.web.demo.service;
+package com.jurinn.web.demo.repository;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -19,7 +19,7 @@ import com.jurinn.web.demo.model.Item;
 import com.jurinn.web.demo.model.Price;
 
 @Service
-public class ItemService {
+public class ItemRepository {
     // TODO:JdbcTemplateで作ったコードをNamedParameterJdbcTemplateに移行。
     @Autowired
     JdbcTemplate jdbcTemplate;

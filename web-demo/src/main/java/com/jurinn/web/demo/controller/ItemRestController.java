@@ -19,17 +19,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jurinn.web.demo.form.ItemForm;
-import com.jurinn.web.demo.form.PriceForm;
 import com.jurinn.web.demo.model.Item;
 import com.jurinn.web.demo.model.Price;
-import com.jurinn.web.demo.service.ItemService;
+import com.jurinn.web.demo.repository.ItemRepository;
 
 @RestController
 @RequestMapping("api/items")
 public class ItemRestController {
     @Autowired
-    ItemService itemService;
+    ItemRepository itemService;
 
     LocalDateTime editStrintToLocalDateTime(String value) {
         return LocalDateTime.from(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss").parse(value));
